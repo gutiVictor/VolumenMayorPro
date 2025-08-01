@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>FENIX - Sistema de Cubicaje</title>
+</head>
+<body>
+    <!-- Header con navegación -->
+    <header class="app-header">
+        <div class="header-content">
+            <div class="logo-section">
+                <img src="PlasticosFenix.png" alt="FENIX Logo" class="header-logo">
+                <div class="brand-info">
+                    <h1>Sistema de Cubicaje FENIX</h1>
+                    <p>Gestión Inteligente de Volumen y Peso</p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Cerrar Sesión
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenido principal -->
+    <main class="main-content">
+        <!-- Sección de entrada de datos -->
+        <section class="input-section">
+            <div class="section-header">
+                <h2><i class="fas fa-calculator"></i> Calculadora de Cubicaje</h2>
+                <p>Ingresa los productos para calcular volumen y peso</p>
+            </div>
+            
+            <div class="input-container">
+                <div class="textarea-wrapper">
+                    <label for="pedido" class="input-label">
+                        <i class="fas fa-list"></i> Lista de Productos
+                    </label>
+                    <textarea 
+                        id="pedido" 
+                        rows="12" 
+                        placeholder="Pega productos aquí (ej: PF101,12)&#10;Formato: CÓDIGO,CANTIDAD&#10;Un producto por línea"
+                        class="modern-textarea"
+                    ></textarea>
+                    <div class="textarea-footer">
+                        <span class="char-count">0 caracteres</span>
+                        <span class="line-count">0 líneas</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de resultados -->
+        <section class="results-section">
+            <div class="section-header">
+                <h2><i class="fas fa-chart-bar"></i> Resultados Totales</h2>
+            </div>
+            
+            <div class="results-grid" id="resultado-totales">
+                <div class="result-card">
+                    <div class="result-icon">
+                        <i class="fas fa-weight-hanging"></i>
+                    </div>
+                    <div class="result-content">
+                        <h3>Peso Total</h3>
+                        <p class="result-value" id="peso-total">0 kg</p>
+                    </div>
+                </div>
+                
+                <div class="result-card">
+                    <div class="result-icon">
+                        <i class="fas fa-box"></i>
+                    </div>
+                    <div class="result-content">
+                        <h3>Volumen Bolsa</h3>
+                        <p class="result-value" id="volumen-total-bolsa">0 m³</p>
+                    </div>
+                </div>
+                
+                <div class="result-card">
+                    <div class="result-icon">
+                        <i class="fas fa-cube"></i>
+                    </div>
+                    <div class="result-content">
+                        <h3>Volumen Cajas</h3>
+                        <p class="result-value" id="volumen-total-cajas">0 m³</p>
+                    </div>
+                </div>
+                
+                <div class="result-card highlight">
+                    <div class="result-icon">
+                        <i class="fas fa-truck"></i>
+                    </div>
+                    <div class="result-content">
+                        <h3>Volumen Consolidado</h3>
+                        <p class="result-value" id="volumen-consolidado-cajas-bolsas">0 m³</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de acciones -->
+        <section class="actions-section">
+            <div class="action-buttons">
+                <button class="action-btn primary" onclick="procesarDatos()">
+                    <i class="fas fa-calculator"></i>
+                    Calcular
+                </button>
+                
+                <button class="action-btn success" id="exportar-excel" onclick="exportarExcel()">
+                    <i class="fas fa-file-excel"></i>
+                    Exportar Excel
+                </button>
+                
+                <button class="action-btn warning" id="exportar-pdf" onclick="exportarPDF()">
+                    <i class="fas fa-file-pdf"></i>
+                    Exportar PDF
+                </button>
+                
+                <button class="action-btn danger" id="reiniciar" onclick="reiniciar()">
+                    <i class="fas fa-redo"></i>
+                    Reiniciar
+                </button>
+            </div>
+        </section>
+
+        <!-- Sección de resultados detallados -->
+        <section class="detailed-results">
+            <div class="results-tabs">
+                <button class="tab-btn active" onclick="showTab('individuales')">
+                    <i class="fas fa-list-ul"></i>
+                    Resultados Individuales
+                </button>
+                <button class="tab-btn" onclick="showTab('camiones')">
+                    <i class="fas fa-truck"></i>
+                    Análisis de Camiones
+                </button>
+            </div>
+            
+            <!-- Tab de resultados individuales -->
+            <div id="tab-individuales" class="tab-content active">
+                <div class="table-container">
+                    <table class="modern-table">
+                        <thead>
+                            <tr>
+                                <th><i class="fas fa-barcode"></i> Código</th>
+                                <th><i class="fas fa-box"></i> Empaque</th>
+                                <th><i class="fas fa-layer-group"></i> Unidad Empaque</th>
+                                <th><i class="fas fa-weight-hanging"></i> Peso Unidad (Grs)</th>
+                                <th><i class="fas fa-basket"></i> Empaque Canasta</th>
+                                <th><i class="fas fa-cube"></i> F. Vol. Unidad</th>
+                                <th><i class="fas fa-calculator"></i> F. Vol. Canastilla</th>
+                                <th><i class="fas fa-sort-numeric-up"></i> Cantidad USD</th>
+                                <th><i class="fas fa-chart-line"></i> F.Vol. Total (m³)</th>
+                                <th><i class="fas fa-th-large"></i> F. Arrume</th>
+                                <th><i class="fas fa-weight-hanging"></i> Peso Total (kg)</th>
+                                <th><i class="fas fa-shopping-bag"></i> Cubicaje (Bolsa)</th>
+                                <th><i class="fas fa-box-open"></i> Cubicaje (Caja)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="resultado-individuales">
+                            <!-- Aquí se llenarán los resultados individuales -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Tab de análisis de camiones -->
+            <div id="tab-camiones" class="tab-content">
+                <div class="table-container">
+                    <table class="modern-table">
+                        <thead>
+                            <tr>
+                                <th><i class="fas fa-truck"></i> Camión</th>
+                                <th><i class="fas fa-cube"></i> Capacidad Volumen (m³)</th>
+                                <th><i class="fas fa-weight-hanging"></i> Capacidad Peso (kg)</th>
+                                <th><i class="fas fa-percentage"></i> Volumen Utilizado (%)</th>
+                                <th><i class="fas fa-percentage"></i> Peso Utilizado (%)</th>
+                                <th><i class="fas fa-chart-bar"></i> Volumen Usado (m³)</th>
+                                <th><i class="fas fa-minus-circle"></i> Volumen Faltante</th>
+                                <th><i class="fas fa-check-circle"></i> ¿Cabe?</th>
+                            </tr>
+                        </thead>
+                        <tbody id="resultado-camiones">
+                            <!-- Aquí se llenarán los resultados de camiones -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+        <div class="footer-content">
+            <p>&copy; 2024 FENIX. Sistema de Cubicaje de Vehículos. Todos los derechos reservados.</p>
+            <div class="footer-links">
+                <a href="#" class="footer-link"><i class="fas fa-question-circle"></i> Ayuda</a>
+                <a href="#" class="footer-link"><i class="fas fa-info-circle"></i> Acerca de</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="logica.js"></script>
+    <script>
+        // Funcionalidad para las pestañas
+        function showTab(tabName) {
+            // Ocultar todas las pestañas
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Mostrar la pestaña seleccionada
+            document.getElementById('tab-' + tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+        
+        // Funcionalidad para el contador de caracteres
+        document.getElementById('pedido').addEventListener('input', function() {
+            const charCount = this.value.length;
+            const lineCount = this.value.split('\n').length;
+            
+            document.querySelector('.char-count').textContent = charCount + ' caracteres';
+            document.querySelector('.line-count').textContent = lineCount + ' líneas';
+        });
+        
+        // Funcionalidad de logout
+        function logout() {
+            if (confirm('¿Estás seguro de que quieres cerrar sesión?')) {
+                window.location.href = 'index.html';
+            }
+        }
+    </script>
+</body>
+</html>

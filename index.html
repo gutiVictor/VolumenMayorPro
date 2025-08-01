@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FENIX - Sistema de Cubicaje</title>
+    <link rel="stylesheet" href="stileslogin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="login-wrapper">
+        <div class="login-container">
+            <div class="login-header">
+                <div class="logo-container">
+                    <img src="PlasticosFenix.png" alt="FENIX Logo" class="logo">
+                </div>
+                <h1>Sistema de Cubicaje</h1>
+                <p class="subtitle">Gestión de Volumen y Peso de Vehículos</p>
+            </div>
+            
+            <form id="loginForm" class="login-form">
+                <div class="input-group">
+                    <div class="input-icon">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="username" name="username" placeholder="Usuario" required>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <div class="input-icon">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" name="password" placeholder="Contraseña" required>
+                        <button type="button" class="toggle-password" id="togglePassword">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <button type="submit" class="login-btn">
+                    <span class="btn-text">Iniciar Sesión</span>
+                    <span class="btn-icon"><i class="fas fa-sign-in-alt"></i></span>
+                </button>
+            </form>
+            
+            <div id="error-message" class="error-message">
+                <i class="fas fa-exclamation-triangle"></i>
+                <span>Usuario o contraseña incorrectos</span>
+            </div>
+            
+            <div class="login-footer">
+                <p>&copy; 2024 FENIX. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="logica.js"></script>
+</body>
+</html>
