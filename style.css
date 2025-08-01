@@ -1,25 +1,25 @@
 /* Importamos fuentes modernas */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
-/* Variables CSS para consistencia */
+/* Variables CSS para consistencia - Modo Oscuro por defecto */
 :root {
     --primary-color: #2563eb;
     --primary-dark: #1d4ed8;
     --success-color: #10b981;
     --danger-color: #ef4444;
     --warning-color: #f59e0b;
-    --text-primary: #1f2937;
-    --text-secondary: #6b7280;
+    --text-primary: #f9fafb;
+    --text-secondary: #d1d5db;
     --text-light: #9ca3af;
-    --bg-primary: #ffffff;
-    --bg-secondary: #f9fafb;
+    --bg-primary: #1f2937;
+    --bg-secondary: #111827;
     --bg-dark: #111827;
-    --border-color: #e5e7eb;
+    --border-color: #374151;
     --border-dark: #374151;
-    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
     --radius-sm: 6px;
     --radius-md: 8px;
     --radius-lg: 12px;
@@ -58,7 +58,7 @@ body::before {
 
 /* Header */
 .app-header {
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(31, 41, 55, 0.95);
     backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--border-color);
     box-shadow: var(--shadow-md);
@@ -155,12 +155,12 @@ body::before {
 
 /* Input Section */
 .input-section {
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(31, 41, 55, 0.95);
     backdrop-filter: blur(20px);
     border-radius: var(--radius-xl);
     padding: 2rem;
     box-shadow: var(--shadow-xl);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid var(--border-color);
 }
 
 .input-container {
@@ -190,7 +190,7 @@ body::before {
     border-radius: var(--radius-lg);
     font-size: 1rem;
     font-family: 'Inter', sans-serif;
-    background: white;
+    background: rgba(55, 65, 81, 0.8);
     color: var(--text-primary);
     transition: all 0.3s ease;
     resize: vertical;
@@ -217,12 +217,12 @@ body::before {
 
 /* Results Section */
 .results-section {
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(31, 41, 55, 0.95);
     backdrop-filter: blur(20px);
     border-radius: var(--radius-xl);
     padding: 2rem;
     box-shadow: var(--shadow-xl);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid var(--border-color);
 }
 
 .results-grid {
@@ -233,7 +233,7 @@ body::before {
 }
 
 .result-card {
-    background: white;
+    background: rgba(55, 65, 81, 0.8);
     border-radius: var(--radius-lg);
     padding: 1.5rem;
     box-shadow: var(--shadow-md);
@@ -296,12 +296,12 @@ body::before {
 
 /* Actions Section */
 .actions-section {
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(31, 41, 55, 0.95);
     backdrop-filter: blur(20px);
     border-radius: var(--radius-xl);
     padding: 2rem;
     box-shadow: var(--shadow-xl);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid var(--border-color);
 }
 
 .action-buttons {
@@ -357,12 +357,12 @@ body::before {
 
 /* Detailed Results */
 .detailed-results {
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(31, 41, 55, 0.95);
     backdrop-filter: blur(20px);
     border-radius: var(--radius-xl);
     padding: 2rem;
     box-shadow: var(--shadow-xl);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid var(--border-color);
 }
 
 .results-tabs {
@@ -414,8 +414,9 @@ body::before {
 .modern-table {
     width: 100%;
     border-collapse: collapse;
-    background: white;
+    background: rgba(55, 65, 81, 0.8);
     font-size: 0.875rem;
+    border: 1px solid var(--border-color);
 }
 
 .modern-table th {
@@ -440,16 +441,16 @@ body::before {
 }
 
 .modern-table tbody tr:hover {
-    background: var(--bg-secondary);
+    background: rgba(107, 114, 128, 0.3);
 }
 
 .modern-table tbody tr:nth-child(even) {
-    background: rgba(249, 250, 251, 0.5);
+    background: rgba(75, 85, 99, 0.3);
 }
 
 /* Footer */
 .app-footer {
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(31, 41, 55, 0.95);
     backdrop-filter: blur(20px);
     border-top: 1px solid var(--border-color);
     margin-top: 3rem;
