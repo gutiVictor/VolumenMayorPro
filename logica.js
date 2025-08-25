@@ -352,9 +352,9 @@ function procesarDatos() {
     { nombre: "Camión Placa TJB-056", capacidadVolumen: 58.73, capacidadPeso: 7000 },
     { nombre: "Camión Placa SZR-699", capacidadVolumen: 75.25, capacidadPeso: 24000 },
     { nombre: "Camión Placa SZR-652", capacidadVolumen: 75.25, capacidadPeso: 24000 },
-    { nombre: "Contenedor 20 ST", capacidadVolumen: 33.2, capacidadPeso: 22180 },
-    { nombre: "Contenedor 40 ST", capacidadVolumen: 77, capacidadPeso: 27750 },
-    { nombre: "Contenedor 40 HC", capacidadVolumen: 75.25, capacidadPeso: 29600 },
+    { nombre: "Contenedor 20 ST", capacidadVolumen: 26.0, capacidadPeso: 22180 },
+    { nombre: "Contenedor 40 ST", capacidadVolumen: 60, capacidadPeso: 27750 },
+    { nombre: "Contenedor 40 HC", capacidadVolumen: 68.0, capacidadPeso: 29600 },
   ];
 
   camiones.forEach((camion) => {
