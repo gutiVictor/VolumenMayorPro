@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sistema de Cubicaje FENIX - Gestión Inteligente de Volumen y Peso de Vehículos">
+    <meta name="keywords" content="cubicaje, logística, transporte, FENIX, volumen, peso">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <title>FENIX - Sistema de Cubicaje</title>
@@ -27,8 +29,75 @@
         </div>
     </header>
 
+    <!-- Barra de herramientas de accesibilidad -->
+    <div class="accessibility-toolbar">
+        <div class="toolbar-content">
+            <div class="toolbar-group">
+                <button class="toolbar-btn" onclick="cambiarTamañoFuente('small')" title="Fuente pequeña">
+                    <i class="fas fa-font"></i><span class="size-indicator">A</span>
+                </button>
+                <button class="toolbar-btn" onclick="cambiarTamañoFuente('medium')" title="Fuente mediana">
+                    <i class="fas fa-font"></i><span class="size-indicator medium">A</span>
+                </button>
+                <button class="toolbar-btn" onclick="cambiarTamañoFuente('large')" title="Fuente grande">
+                    <i class="fas fa-font"></i><span class="size-indicator large">A</span>
+                </button>
+            </div>
+            <div class="toolbar-divider"></div>
+            <div class="toolbar-group">
+                <button class="toolbar-btn" onclick="toggleAltoContraste()" title="Alto contraste">
+                    <i class="fas fa-adjust"></i> Contraste
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Contenido principal -->
     <main class="main-content">
+        <!-- Dashboard de Métricas KPI -->
+        <section class="metrics-dashboard">
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-icon" style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);">
+                        <i class="fas fa-box"></i>
+                    </div>
+                    <div class="metric-content">
+                        <div class="metric-label">Productos Procesados</div>
+                        <div class="metric-value" id="metric-productos">0</div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                        <i class="fas fa-truck"></i>
+                    </div>
+                    <div class="metric-content">
+                        <div class="metric-label">Camiones Disponibles</div>
+                        <div class="metric-value" id="metric-camiones">0/10</div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="metric-content">
+                        <div class="metric-label">Eficiencia de Carga</div>
+                        <div class="metric-value" id="metric-eficiencia">0%</div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon" style="background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <div class="metric-content">
+                        <div class="metric-label">Mejor Opción</div>
+                        <div class="metric-value" id="metric-mejor">-</div>
+                    </div>
+                </div>
+            </div>
+        </section>
         <!-- Sección de entrada de datos -->
         <section class="input-section">
             <div class="section-header">
@@ -50,12 +119,68 @@
                     <div class="textarea-footer">
                         <span class="char-count">0 caracteres</span>
                         <span class="line-count">0 líneas</span>
+                        <span class="validation-count">
+                            <span class="valid-count">✓ 0</span>
+                            <span class="invalid-count">✗ 0</span>
+                        </span>
                     </div>
                 </div>
+                
+                <!-- Controles adicionales de entrada -->
+                <div class="input-controls">
+                    <button type="button" class="control-btn" onclick="cargarArchivo()">
+                        <i class="fas fa-file-upload"></i> Cargar CSV/Excel
+                    </button>
+                    <button type="button" class="control-btn secondary" onclick="descargarPlantilla()">
+                        <i class="fas fa-download"></i> Descargar Plantilla
+                    </button>
+                    <button type="button" class="control-btn secondary" onclick="limpiarTextarea()">
+                        <i class="fas fa-eraser"></i> Limpiar
+                    </button>
+                </div>
+                <input type="file" id="file-input" accept=".csv,.xlsx,.xls" style="display: none;" onchange="procesarArchivo(event)">
             </div>
         </section>
 
-        <!-- Sección de resultados -->
+        <!-- Sección de gráficos visuales -->
+        <section class="charts-section">
+            <div class="section-header">
+                <h2><i class="fas fa-chart-pie"></i> Visualización de Datos</h2>
+            </div>
+            
+            <div class="charts-grid">
+                <!-- Gráfico de utilización de camiones -->
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <h3><i class="fas fa-truck"></i> Utilización de Camiones</h3>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="chart-camiones"></canvas>
+                    </div>
+                </div>
+                
+                <!-- Gráfico de distribución bolsas vs cajas -->
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <h3><i class="fas fa-chart-pie"></i> Distribución de Empaque</h3>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="chart-distribucion"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Gráfico de comparación de capacidades -->
+            <div class="chart-container full-width">
+                <div class="chart-header">
+                    <h3><i class="fas fa-chart-bar"></i> Comparación de Capacidades</h3>
+                </div>
+                <div class="chart-wrapper large">
+                    <canvas id="chart-comparacion"></canvas>
+            </div>
+        </div>
+        </section>
+        
         <section class="results-section">
             <div class="section-header">
                 <h2><i class="fas fa-chart-bar"></i> Resultados Totales</h2>
@@ -131,6 +256,24 @@
 
         <!-- Sección de resultados detallados -->
         <section class="detailed-results">
+            <!-- Controles de búsqueda y filtros -->
+            <div class="search-filter-bar">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="search-input" placeholder="Buscar por código, empaque..." onkeyup="buscarEnTabla()">
+                </div>
+                <div class="filter-controls">
+                    <select id="filter-tipo" onchange="filtrarPorTipo()" class="filter-select">
+                        <option value="">Todos los tipos</option>
+                        <option value="Bolsa">Bolsa</option>
+                        <option value="Caja">Caja</option>
+                    </select>
+                    <button class="filter-btn" onclick="resetearFiltros()">
+                        <i class="fas fa-redo"></i> Resetear
+                    </button>
+                </div>
+            </div>
+            
             <div class="results-tabs">
                 <button class="tab-btn active" onclick="showTab('individuales')">
                     <i class="fas fa-list-ul"></i>
@@ -195,6 +338,38 @@
         </section>
     </main>
 
+    <!-- Modal de comparación de camiones -->
+    <div id="modal-comparacion" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-balance-scale"></i> Comparar Configuraciones</h2>
+                <button class="modal-close" onclick="cerrarModalComparacion()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="comparison-selector">
+                    <p>Selecciona hasta 3 camiones para comparar:</p>
+                    <div id="camiones-selector" class="camiones-checkboxes">
+                        <!-- Se llenará dinámicamente -->
+                    </div>
+                </div>
+                <div id="comparison-results" class="comparison-table-container">
+                    <!-- Tabla de comparación se generará aquí -->
+                </div>
+                <div id="recommendation" class="recommendation-box">
+                    <!-- Recomendación automática -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="action-btn secondary" onclick="cerrarModalComparacion()">Cerrar</button>
+                <button class="action-btn primary" onclick="compararSeleccionados()">
+                    <i class="fas fa-chart-bar"></i> Comparar
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer class="app-footer">
         <div class="footer-content">
@@ -206,8 +381,17 @@
         </div>
     </footer>
 
+    <!-- Librerías externas -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    
+    <!-- Scripts propios -->
+    <script src="utils.js"></script>
+    <script src="charts-config.js"></script>
+    <script src="autocomplete.js"></script>
     <script src="logica.js"></script>
     <script>
         // Funcionalidad para las pestañas
