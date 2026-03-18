@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
       // Simular delay para mejor UX
       setTimeout(() => {
         if ((username === 'admin' && password === '123') 
-          || (username === 'usuario' && password === 'fenix')
+          || (username === 'usuario' && password === '2026')
           || (username === 'laura' && password === 'fenix')
           || (username === 'zora' && password === 'fenix')) {
           
@@ -358,11 +358,11 @@ function procesarDatosCore() {
     { nombre: "Camión Placa SQD-563", capacidadVolumen: 57.88, capacidadPeso: 7000 },
     { nombre: "Camión Placa WCW-366", capacidadVolumen: 60.68, capacidadPeso: 6900 },
     { nombre: "Camión Placa TJB-056", capacidadVolumen: 58.73, capacidadPeso: 7000 },
-    { nombre: "Camión Placa SZR-699", capacidadVolumen: 75.25, capacidadPeso: 24000 },
-    { nombre: "Camión Placa SZR-652", capacidadVolumen: 75.25, capacidadPeso: 24000 },
-    { nombre: "Contenedor 20 ST", capacidadVolumen: 26.0, capacidadPeso: 22180 },
-    { nombre: "Contenedor 40 ST", capacidadVolumen: 60, capacidadPeso: 27750 },
-    { nombre: "Contenedor 40 HC", capacidadVolumen: 68.0, capacidadPeso: 29600 },
+    //{ nombre: "Camión Placa SZR-699", capacidadVolumen: 75.25, capacidadPeso: 24000 },
+    //{ nombre: "Camión Placa SZR-652", capacidadVolumen: 75.25, capacidadPeso: 24000 },
+    { nombre: "Contenedor 20 ST", capacidadVolumen: 33.2, capacidadPeso: 22180 },
+    { nombre: "Contenedor 40 ST", capacidadVolumen: 67.3, capacidadPeso: 27750 },
+    { nombre: "Contenedor 40 HC", capacidadVolumen: 76.4, capacidadPeso: 29600 },
   ];
 
   camiones.forEach((camion) => {
